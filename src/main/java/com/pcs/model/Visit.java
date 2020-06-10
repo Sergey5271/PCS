@@ -1,16 +1,17 @@
 package com.pcs.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "visits")
-public class Visit extends BaseEntity{
+public class Visit extends BaseEntity {
 
     @Column(name = "visit_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -20,13 +21,10 @@ public class Visit extends BaseEntity{
     @Column(name = "description")
     private String description;
 
-    @Column(name = "disease_id")
-    private Integer diseaseId;
+    @Column(name = "symptom_id")
+    private Integer symptomId;
 
-    /**
-     * Creates a new instance of Visit for the current date
-     */
-    public Visit(){
+    public Visit() {
         this.date = LocalDate.now();
     }
 
@@ -46,11 +44,11 @@ public class Visit extends BaseEntity{
         this.description = description;
     }
 
-    public Integer getDiseaseId() {
-        return diseaseId;
+    public Integer getSymptomId() {
+        return symptomId;
     }
 
-    public void setDiseaseId(Integer diseaseId) {
-        this.diseaseId = diseaseId;
+    public void setSymptomId(Integer symptomId) {
+        this.symptomId = symptomId;
     }
 }

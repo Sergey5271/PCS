@@ -17,7 +17,7 @@ public interface UserRepository extends Repository<User, Integer> {
      * @return a Collection of matching {@link User}s (or an empty Collection if none
      * found)
      */
-    @Query("SELECT DISTINCT user FROM User user left join fetch user.diseases WHERE user.lastName LIKE :lastName%")
+    @Query("SELECT DISTINCT user FROM User user left join fetch user.symptom WHERE user.lastName LIKE :lastName%")
     @Transactional(readOnly = true)
     Collection<User> findByLastName(@Param("lastName") String lastName);
 
@@ -26,7 +26,7 @@ public interface UserRepository extends Repository<User, Integer> {
      * @param id the id to search for
      * @return the {@link User} if found
      */
-    @Query("SELECT user FROM User user left join fetch user.diseases WHERE user.id =:id")
+    @Query("SELECT user FROM User user left join fetch user.symptom WHERE user.id =:id")
     @Transactional(readOnly = true)
     User findById(@Param("id") Integer id);
 

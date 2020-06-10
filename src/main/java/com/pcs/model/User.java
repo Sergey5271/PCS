@@ -35,7 +35,7 @@ public class User extends BaseEntity {
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Disease> diseases;
+    private Set<Symptom> symptom;
 
     public String getFirstName() {
         return firstName;
@@ -77,42 +77,42 @@ public class User extends BaseEntity {
         this.telephone = telephone;
     }
 
-    protected Set<Disease> getDiseasesInternal() {
-        if (this.diseases == null) {
-            this.diseases = new HashSet<>();
+    protected Set<Symptom> getSymptomInternal() {
+        if (this.symptom == null) {
+            this.symptom = new HashSet<>();
         }
-        return this.diseases;
+        return this.symptom;
     }
 
-    protected void setDiseasesInternal(Set<Disease> diseases) {
-        this.diseases = diseases;
+    protected void setSymptomInternal(Set<Symptom> symptom) {
+        this.symptom = symptom;
     }
 
-    public List<Disease> getDisease() {
-        List<Disease> sortedDisease = new ArrayList<>(getDiseasesInternal());
+    public List<Symptom> getSymptom() {
+        List<Symptom> sortedDisease = new ArrayList<>(getSymptomInternal());
         PropertyComparator.sort(sortedDisease, new MutableSortDefinition("name", true, true));
         return Collections.unmodifiableList(sortedDisease);
     }
 
-    public void addPet(Disease disease) {
-        if (disease.isNew()) {
-            getDiseasesInternal().add(disease);
+    public void addSymptom(Symptom symptom) {
+        if (symptom.isNew()) {
+            getSymptomInternal().add(symptom);
         }
-        disease.setUser(this);
+        symptom.setUser(this);
     }
 
-    public Disease getDisease(String name){
-        return getDisease(name, false);
+    public Symptom getSymptom(String name){
+        return getSymptom(name, false);
     }
 
-    public Disease getDisease(String name, boolean ignoreNew){
+    public Symptom getSymptom(String name, boolean ignoreNew){
         name = name.toLowerCase();
-        for (Disease disease : getDiseasesInternal()) {
-            if (!ignoreNew || !disease.isNew()) {
-                String compName = disease.getName();
+        for (Symptom symptom : getSymptomInternal()) {
+            if (!ignoreNew || !symptom.isNew()) {
+                String compName = symptom.getName();
                 compName = compName.toLowerCase();
                 if (compName.equals(name)) {
-                    return disease;
+                    return symptom;
                 }
             }
         }

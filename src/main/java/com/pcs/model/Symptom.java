@@ -1,18 +1,19 @@
 package com.pcs.model;
 
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "diseases")
-public class Disease extends BaseEntity {
+@Table(name = "symptoms")
+public class Symptom extends BaseEntity{
 
-    @Column(name = "name")
     private String name;
 
     @Column(name = "birth_date")
@@ -21,7 +22,7 @@ public class Disease extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "type_id")
-    private DiseaseType type;
+    private SymptomType type;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -46,11 +47,11 @@ public class Disease extends BaseEntity {
         this.birthDate = birthDate;
     }
 
-    public DiseaseType getType() {
+    public SymptomType getType() {
         return type;
     }
 
-    public void setType(DiseaseType type) {
+    public void setType(SymptomType type) {
         this.type = type;
     }
 
@@ -62,6 +63,19 @@ public class Disease extends BaseEntity {
         this.user = user;
     }
 
+    public void setVisitsInternal(Collection<Visit> visits) {
+        this.visits = new LinkedHashSet<>(visits);
+    }
+
+    public Set<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(Set<Visit> visits) {
+        this.visits = visits;
+    }
+
+
     protected Set<Visit> getVisitsInternal() {
         if (this.visits == null) {
             this.visits = new HashSet<>();
@@ -69,18 +83,8 @@ public class Disease extends BaseEntity {
         return this.visits;
     }
 
-    protected void setVisitsInternal(Collection<Visit> visits) {
-        this.visits = new LinkedHashSet<>(visits);
-    }
-
-    public List<Visit> getVisits() {
-        List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
-        PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
-        return Collections.unmodifiableList(sortedVisits);
-    }
-
-    public void addVisits(Visit visit) {
+    public void addVisit(Visit visit) {
         getVisitsInternal().add(visit);
-        visit.setDiseaseId(this.getId());
+        visit.setSymptomId(this.getId());
     }
 }

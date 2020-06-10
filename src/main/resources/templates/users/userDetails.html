@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'users')}">
+
+<body>
+
+
+<h2>User Information</h2>
+
+
+<table class="table table-striped" th:object="${user}">
+    <tr>
+        <th>Name</th>
+        <td><b th:text="*{firstName + ' ' + lastName}"></b></td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td th:text="*{address}" /></td>
+    </tr>
+    <tr>
+        <th>City</th>
+        <td th:text="*{city}" /></td>
+    </tr>
+    <tr>
+        <th>Telephone</th>
+        <td th:text="*{telephone}" /></td>
+    </tr>
+</table>
+
+<a th:href="@{{id}/edit(id=${user.id})}" class="btn btn-default">Edit
+    User</a>
+<a th:href="@{{id}/symptoms/new(id=${user.id})}" class="btn btn-default">Add
+    New Symptom</a>
+
+<br />
+<br />
+<br />
+<h2>Symptoms and Visits</h2>
+
+<table class="table table-striped">
+
+    <tr th:each="symptom : ${user.symptom}">
+        <td valign="top">
+            <dl class="dl-horizontal">
+                <dt>Name</dt>
+                <dd th:text="${symptom.name}" /></dd>
+                <dt>Birth Date</dt>
+                <dd
+                        th:text="${#temporals.format(symptom.birthDate, 'yyyy-MM-dd')}" /></dd>
+                <dt>Type</dt>
+                <dd th:text="${symptom.type}" /></dd>
+            </dl>
+        </td>
+        <td valign="top">
+            <table class="table-condensed">
+                <thead>
+                <tr>
+                    <th>Visit Date</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tr th:each="visit : ${symptom.visits}">
+                    <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${visit?.description}"></td>
+                </tr>
+                <tr>
+                    <td><a
+                            th:href="@{{userId}/symptoms/{symptomId}/edit(userId=${user.id},symptomId=${symptom.id})}">Edit
+                        Symptom</a></td>
+                    <td><a
+                            th:href="@{{userId}/symptoms/{symptomId}/visits/new(userId=${user.id},symptomId=${symptom.id})}">Add
+                        Visit</a></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+
+</html>
