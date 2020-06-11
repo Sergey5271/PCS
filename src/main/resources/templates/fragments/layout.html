@@ -49,11 +49,14 @@
                     <span>Find user</span>
                 </li>
 
-                <li th:replace="::menuItem ('/doctors.html','doctors','doctors','th-list','Exercises')">
+                <li th:replace="::menuItem ('/exercises','exercises','exercises','th-list','Exercises')">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Exercises</span>
                 </li>
-
+                <li th:replace="::menuItem ('/displayGraph','graphs','graph','th-list','Graph')">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Graph</span>
+                </li>
             </ul>
         </div>
     </div>

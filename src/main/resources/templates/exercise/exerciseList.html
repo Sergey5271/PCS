@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'exercise')}">
+
+<body>
+
+<h2>Exercise</h2>
+
+<table id="users" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">Name</th>
+        <th>Description</th>
+        <th style="width: 200px;">Difficult level</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="exercise : ${selections}">
+        <td>
+            <a th:href="@{/exercises/__${exercise.id}__}" th:text="${exercise.name}"/></a>
+        </td>
+        <td th:text="${exercise.description}"/>
+        <td th:text="${exercise.difficultLevel}"/>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
