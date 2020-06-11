@@ -68,4 +68,25 @@ public class SymptomController {
         }
     }
 
+    @GetMapping("/symptoms/{symptomId}/edit")
+    public String initUpdateForm(@PathVariable("symptomId") int symptomId, ModelMap model) {
+        Symptom symptom = this.symptomRepository.findById(symptomId);
+        model.put("symptom", symptom);
+        return VIEWS_SYMPTOMS_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping("/symptoms/{symptomId}/edit")
+    public String processUpdateForm(@Valid Symptom symptom, BindingResult result, User user, ModelMap model) {
+        if (result.hasErrors()) {
+            symptom.setUser(user);
+            model.put("symptom", symptom);
+            return VIEWS_SYMPTOMS_CREATE_OR_UPDATE_FORM;
+        }
+        else {
+            user.addSymptom(symptom);
+            this.symptomRepository.save(symptom);
+            return "redirect:/users/{userId}";
+        }
+    }
+
 }
