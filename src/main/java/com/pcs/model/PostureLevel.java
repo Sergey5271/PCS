@@ -2,9 +2,7 @@ package com.pcs.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -20,6 +18,13 @@ public class PostureLevel extends BaseEntity {
 
     @Column(name = "back_front_level")
     private Integer backFrontLevel;
+
+    @Column(name = "back_side_level")
+    private Integer backSideLevel;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public PostureLevel() {
         this.date = LocalDate.now();
@@ -49,6 +54,22 @@ public class PostureLevel extends BaseEntity {
         this.backFrontLevel = backFrontLevel;
     }
 
+    public Integer getBackSideLevel() {
+        return backSideLevel;
+    }
+
+    public void setBackSideLevel(Integer backSideLevel) {
+        this.backSideLevel = backSideLevel;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,7 +79,11 @@ public class PostureLevel extends BaseEntity {
 
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (neckLevel != null ? !neckLevel.equals(that.neckLevel) : that.neckLevel != null) return false;
-        return backFrontLevel != null ? backFrontLevel.equals(that.backFrontLevel) : that.backFrontLevel == null;
+        if (backFrontLevel != null ? !backFrontLevel.equals(that.backFrontLevel) : that.backFrontLevel != null)
+            return false;
+        if (backSideLevel != null ? !backSideLevel.equals(that.backSideLevel) : that.backSideLevel != null)
+            return false;
+        return user != null ? user.equals(that.user) : that.user == null;
     }
 
     @Override
@@ -66,6 +91,8 @@ public class PostureLevel extends BaseEntity {
         int result = date != null ? date.hashCode() : 0;
         result = 31 * result + (neckLevel != null ? neckLevel.hashCode() : 0);
         result = 31 * result + (backFrontLevel != null ? backFrontLevel.hashCode() : 0);
+        result = 31 * result + (backSideLevel != null ? backSideLevel.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 }

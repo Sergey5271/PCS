@@ -1,15 +1,14 @@
 package com.pcs.repository;
 
 import com.pcs.model.PostureLevel;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public interface PostureRepository extends JpaRepository<PostureLevel, Integer> {
+public interface PostureRepository extends Repository<PostureLevel, Integer> {
 
-    Integer getByNeckLevel(Integer name);
+    void save(PostureLevel postureLevel);
 
-
-
+    @Transactional(readOnly = true)
+    PostureLevel findById(Integer id);
 
 }

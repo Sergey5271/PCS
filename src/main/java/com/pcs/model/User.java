@@ -37,6 +37,9 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Symptom> symptom;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<PostureLevel> postureLevels;
+
     public String getFirstName() {
         return firstName;
     }
@@ -75,6 +78,14 @@ public class User extends BaseEntity {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public Set<PostureLevel> getPostureLevels() {
+        return postureLevels;
+    }
+
+    public void setPostureLevels(Set<PostureLevel> postureLevels) {
+        this.postureLevels = postureLevels;
     }
 
     protected Set<Symptom> getSymptomInternal() {
@@ -117,6 +128,20 @@ public class User extends BaseEntity {
             }
         }
         return null;
+    }
+
+    public void addPosture(PostureLevel postureLevel) {
+        if (postureLevel.isNew()) {
+            getPostureInternal().add(postureLevel);
+        }
+        postureLevel.setUser(this);
+    }
+
+    protected Set<PostureLevel> getPostureInternal() {
+        if (this.postureLevels == null) {
+            this.postureLevels = new HashSet<>();
+        }
+        return this.postureLevels;
     }
 
     @Override
