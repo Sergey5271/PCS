@@ -35,8 +35,8 @@
                 crosshair: true
             },
             yAxis: {
-                min: -10,
-                max:10,
+                min: -100,
+                max:100,
                 title: {
                     text: 'Technology rating [in %]'
                 }
@@ -56,13 +56,16 @@
                 }
             },
             series: [{
-                name: 'Neck Level',
+                name: 'Back Front Level',
                 data: [[${surveyMap.values()}]]
-            },
-                {
-                name: 'BackFront Level',
+            },{
+                name: 'Neck Level',
+                data: [[${surveyMap2.values()}]]
+            },{
+                name: 'Back Side Level',
                 data: [[${surveyMap1.values()}]]
             }
+
             ]
         });
     });

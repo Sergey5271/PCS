@@ -2,13 +2,13 @@ package com.pcs.repository;
 
 import com.pcs.model.PostureLevel;
 import org.springframework.data.repository.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public interface PostureRepository extends Repository<PostureLevel, Integer> {
 
     void save(PostureLevel postureLevel);
 
-    @Transactional(readOnly = true)
-    PostureLevel findById(Integer id);
+    List<PostureLevel> findAll();
 
 }

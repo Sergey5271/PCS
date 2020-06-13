@@ -95,4 +95,15 @@ public class PostureLevel extends BaseEntity {
         result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "PostureLevel{" +
+                "date=" + date +
+                ", neckLevel=" + neckLevel +
+                ", backFrontLevel=" + backFrontLevel +
+                ", backSideLevel=" + backSideLevel +
+                ", user=" + user +
+                '}';
+    }
 }
