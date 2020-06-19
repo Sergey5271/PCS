@@ -70,7 +70,7 @@ public class UserController {
         }
 
         // find owners by last name
-        Collection<User> results = this.userRepository.findByLastName(user.getLastName());
+        Collection<User> results = this.userRepository.findByLastNames(user.getLastName());
         if (results.isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");

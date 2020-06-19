@@ -40,6 +40,16 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<PostureLevel> postureLevels;
 
+    @Column(name = "password")
+    private String password;
+
+    @ManyToMany(cascade=CascadeType.MERGE)
+    @JoinTable(
+            name="user_role",
+            joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+    private List<Role> roles;
+
     public String getFirstName() {
         return firstName;
     }
@@ -86,6 +96,22 @@ public class User extends BaseEntity {
 
     public void setPostureLevels(Set<PostureLevel> postureLevels) {
         this.postureLevels = postureLevels;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     protected Set<Symptom> getSymptomInternal() {

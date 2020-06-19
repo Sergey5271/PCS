@@ -1,5 +1,6 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html th:fragment="layout (template, menu)"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 
@@ -43,8 +44,7 @@
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     <span>Home</span>
                 </li>
-
-                <li th:replace="::menuItem ('/users/find','users','find user','search','Find user')">
+                <li sec:authorize="hasRole('ROLE_ADMIN')" th:replace="::menuItem ('/users/find','users','find user','search','Find user')">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Find user</span>
                 </li>
@@ -54,6 +54,10 @@
                     <span>Exercises</span>
                 </li>
                 <li th:replace="::menuItem ('/displayGraph','graphs','graph','th-list','Graph')">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Graph</span>
+                </li>
+                <li th:replace="::menuItem ('/listMess','listMess','listMess','th-list','Messages')">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Graph</span>
                 </li>

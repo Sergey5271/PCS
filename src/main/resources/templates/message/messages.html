@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+<body>
+<div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+<form th:action="@{/messages}" method="post">
+    <textarea name="content" cols="50" rows="5"></textarea>
+    <br>
+    <input type="submit" value="Submit" />
+</form>
+</div>
+</div>
+<div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Messages
+        </div>
+        <p th:each="msg: ${msgs}" th:text="${msg.content}"></p>
+    </div>
+</div>
+
+</body>
+
+</html>
