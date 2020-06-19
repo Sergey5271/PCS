@@ -21,6 +21,18 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
+class PasswordEnconderTest implements PasswordEncoder {
+    @Override
+    public String encode(CharSequence charSequence) {
+        return charSequence.toString();
+    }
+
+    @Override
+    public boolean matches(CharSequence charSequence, String s) {
+        return charSequence.toString().equals(s);
+    }
+}
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
@@ -33,8 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     private DataSource dataSource;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder(){
+        return new PasswordEnconderTest();
     }
 
     @Autowired
@@ -64,7 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll()
-        ;
+                .permitAll();
     }
 }

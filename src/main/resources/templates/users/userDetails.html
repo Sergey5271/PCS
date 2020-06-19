@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       th:replace="~{fragments/layout :: layout (~{::body},'users')}">
 
 <body>
@@ -28,12 +29,13 @@
     </tr>
 </table>
 
+<div sec:authorize="hasRole('ROLE_ADMIN')">
 <a th:href="@{{id}/edit(id=${user.id})}" class="btn btn-default">Edit
     User</a>
 <a th:href="@{{id}/symptoms/new(id=${user.id})}" class="btn btn-default">Add
     New Symptom</a>
 <a th:href="@{{id}/posture/new(id=${user.id})}" class="btn btn-default">Posture Emulator</a>
-
+</div>
 <br />
 <br />
 <br />
@@ -66,10 +68,10 @@
                     <td th:text="${visit?.description}"></td>
                 </tr>
                 <tr>
-                    <td><a
+                    <td><a sec:authorize="hasRole('ROLE_ADMIN')"
                             th:href="@{{userId}/symptoms/{symptomId}/edit(userId=${user.id},symptomId=${symptom.id})}">Edit
                         Symptom</a></td>
-                    <td><a
+                    <td><a sec:authorize="hasRole('ROLE_ADMIN')"
                             th:href="@{{userId}/symptoms/{symptomId}/visits/new(userId=${user.id},symptomId=${symptom.id})}">Add
                         Visit</a></td>
                 </tr>
